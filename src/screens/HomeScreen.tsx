@@ -39,6 +39,7 @@ export default function HomeScreen({ navigation }: NavigationProps<Routes.HomeSc
         <RNTextComponent style={styles.price} textKey={STR.PRICE} values={{ price: `$${product.price.toFixed(2)}` }} />
         <Pressable
           testID={`product_add_button_${product.id}`}
+          accessibilityLabel="product_add_button"
           disabled={isAdded}
           onPress={() => dispatch(addToCart(product))}
           style={[styles.button, isAdded && styles.buttonDisabled]}
@@ -55,7 +56,7 @@ export default function HomeScreen({ navigation }: NavigationProps<Routes.HomeSc
         titleKey={STR.HOME}
         rightContent={
           <View style={styles.headerRight}>
-            <Pressable onPress={() => navigation.navigate(Routes.CartScreen)} style={styles.iconWrap}>
+            <Pressable testID="cart_icon" accessibilityLabel="cart_icon" onPress={() => navigation.navigate(Routes.CartScreen)} style={styles.iconWrap}>
               <RNTextComponent style={styles.icon}>🛒</RNTextComponent>
               {cartCount > 0 && (
                 <View style={styles.badge}>

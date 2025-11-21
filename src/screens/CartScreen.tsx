@@ -37,7 +37,12 @@ export default function CartScreen({ navigation }: NavigationProps<Routes.CartSc
                 <RNTextComponent isSemiBold style={styles.title}>{item.title}</RNTextComponent>
                 <RNTextComponent style={styles.price} textKey={STR.PRICE} values={{ price: `$${item.price.toFixed(2)}` }} />
               </View>
-              <Pressable onPress={() => dispatch(removeFromCart(item.id))} style={styles.deleteBtn}>
+              <Pressable
+                testID={`cart_item_delete_${item.id}`}
+                accessibilityLabel="cart_item_delete"
+                onPress={() => dispatch(removeFromCart(item.id))}
+                style={styles.deleteBtn}
+              >
                 <RNTextComponent style={{ fontSize: 18 }}>🗑️</RNTextComponent>
               </Pressable>
             </View>

@@ -1,0 +1,21 @@
+appId: host.exp.Exponent
+---
+- openLink: "exp://192.168.29.51:8081"
+
+- tapOn:
+    label: "product_add_button"
+    index: 3
+
+- tapOn:
+    id: "cart_icon"
+
+- tapOn:
+    label: "cart_item_delete"
+    index: 0
+
+- assertNotVisible:
+    label: "cart_item_delete"
+
+- tapOn:
+    id: "cart_back_button"
+

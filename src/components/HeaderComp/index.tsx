@@ -26,13 +26,21 @@ const HeaderComp: React.FC<HeaderCompProps> = ({
 }) => {
   return (
     <View style={[styles.header, containerStyle]}>
-      <Pressable style={styles.side} onPress={onPressLeft} disabled={!onPressLeft} testID={leftTestID}>
-        {leftContent}
-      </Pressable>
+      {onPressLeft ? (
+        <Pressable style={styles.side} onPress={onPressLeft} testID={leftTestID}>
+          {leftContent}
+        </Pressable>
+      ) : (
+        <View style={styles.side}>{leftContent}</View>
+      )}
       <RNTextComponent isSemiBold style={styles.title} textKey={titleKey} />
-      <Pressable style={[styles.side, { justifyContent: 'flex-end' }]} onPress={onPressRight} disabled={!onPressRight} testID={rightTestID}>
-        {rightContent}
-      </Pressable>
+      {onPressRight ? (
+        <Pressable style={[styles.side, { justifyContent: 'flex-end' }]} onPress={onPressRight} testID={rightTestID}>
+          {rightContent}
+        </Pressable>
+      ) : (
+        <View style={[styles.side, { justifyContent: 'flex-end' }]}>{rightContent}</View>
+      )}
     </View>
   );
 };
