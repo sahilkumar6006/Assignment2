@@ -1,25 +1,22 @@
 import React from 'react';
-import { FlatList, Pressable, SafeAreaView, StyleSheet, View } from 'react-native';
+import { FlatList, Pressable, StyleSheet, View } from 'react-native';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { removeFromCart } from '../store/slices/cartSlice';
 import RNTextComponent from '../components/RNTEXTComponent';
 import HeaderComp from '../components/HeaderComp';
 import { STR } from '../constants/strings';
+import { NavigationProps, Routes } from '../routes/types';
 
-export type CartScreenProps = {
-  navigateBack: () => void;
-};
-
-export default function CartScreen({ navigateBack }: CartScreenProps) {
+export default function CartScreen({ navigation }: NavigationProps<Routes.CartScreen>) {
   const dispatch = useAppDispatch();
   const items = useAppSelector((s) => s.cart.items);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <HeaderComp
         titleKey={STR.CART}
         leftContent={<RNTextComponent style={styles.icon}>←</RNTextComponent>}
-        onPressLeft={navigateBack}
+        onPressLeft={() => navigation.goBack()}
       />
 
       {items.length === 0 ? (
@@ -45,7 +42,7 @@ export default function CartScreen({ navigateBack }: CartScreenProps) {
           )}
         />
       )}
-    </SafeAreaView>
+    </View>
   );
 }
 

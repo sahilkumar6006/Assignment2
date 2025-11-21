@@ -7,15 +7,13 @@ import { PRODUCTS } from '../data/products';
 import RNTextComponent from '../components/RNTEXTComponent';
 import HeaderComp from '../components/HeaderComp';
 import { STR } from '../constants/strings';
+import { NavigationProps, Routes } from '../routes/types';
 
-export type HomeScreenProps = {
-  navigateToCart: () => void;
-};
-
-export default function HomeScreen({ navigateToCart }: HomeScreenProps) {
+export default function HomeScreen({ navigation }: NavigationProps<Routes.HomeScreen>) {
   const dispatch = useAppDispatch();
   const cartCount = useAppSelector((s) => s.cart.items.length);
   const lang = useAppSelector((s) => s.language.code as 'en' | 'ar');
+  const items = useAppSelector((s) => s.cart.items);
 
   const [settingsVisible, setSettingsVisible] = useState(false);
   const [loops, setLoops] = useState(1);
@@ -30,7 +28,7 @@ export default function HomeScreen({ navigateToCart }: HomeScreenProps) {
     return arr;
   }, [loops]);
 
-  const cartIds = useAppSelector((s) => new Set(s.cart.items.map((i: Product) => i.id)));
+  const cartIds = useMemo(() => new Set(items.map((i: Product) => i.id)), [items]);
 
   const renderItem = ({ item }: { item: { productId: string; instanceKey: string } }) => {
     const product = PRODUCTS.find((p) => p.id === item.productId)!;
@@ -56,7 +54,7 @@ export default function HomeScreen({ navigateToCart }: HomeScreenProps) {
         titleKey={STR.HOME}
         rightContent={
           <View style={styles.headerRight}>
-            <Pressable onPress={navigateToCart} style={styles.iconWrap}>
+            <Pressable onPress={() => navigation.navigate(Routes.CartScreen)} style={styles.iconWrap}>
               <RNTextComponent style={styles.icon}>🛒</RNTextComponent>
               {cartCount > 0 && (
                 <View style={styles.badge}>
