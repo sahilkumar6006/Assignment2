@@ -1,20 +1,30 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react'
+import { NavigationContainer } from '@react-navigation/native'
+import { createNativeStackNavigator, NativeStackScreenProps } from '@react-navigation/native-stack'
+import HomeScreen from './src/screens/HomeScreen'
+import CartScreen from './src/screens/CartScreen'
+import { enableScreens } from 'react-native-screens'
+import { Provider } from 'react-redux'
+import { PersistGate } from 'redux-persist/integration/react'
+import { persistor, store } from './src/store'
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+type RootStackParamList = {
+  Home: undefined
+  Cart: undefined
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+const Stack = createNativeStackNavigator<RootStackParamList>()
+
+enableScreens()
+
+const App = () => {
+  return (
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
+       <HomeScreen navigateToCart={() => {}}/>
+      </PersistGate>
+    </Provider>
+  )
+}
+
+export default App

@@ -1,0 +1,13 @@
+{
+  "HOME": "Home",
+  "SETTINGS": "Settings",
+  "LANGUAGE": "Language",
+  "ENGLISH": "English",
+  "ARABIC": "Arabic",
+  "ADD_TO_CART": "Add to Cart",
+  "ADDED": "Added",
+  "CLOSE": "Close",
+  "PRICE": "{{price}}",
+  "CART": "Cart",
+  "EMPTY_CART": "Your cart is empty"
+}
