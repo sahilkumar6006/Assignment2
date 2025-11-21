@@ -17,6 +17,8 @@ export default function CartScreen({ navigation }: NavigationProps<Routes.CartSc
         titleKey={STR.CART}
         leftContent={<RNTextComponent style={styles.icon}>←</RNTextComponent>}
         onPressLeft={() => navigation.goBack()}
+        leftTestID='cart_back_button'
+        rightTestID='cart_back_button'
       />
 
       {items.length === 0 ? (

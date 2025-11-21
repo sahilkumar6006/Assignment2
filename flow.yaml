@@ -1,0 +1,5 @@
+appId: "com.sahil.assignment2"
+ ----
+ -launchApp
+ -assertVisible:test
+ 

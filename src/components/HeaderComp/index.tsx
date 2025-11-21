@@ -10,6 +10,8 @@ export type HeaderCompProps = {
   containerStyle?: ViewStyle;
   onPressLeft?: () => void;
   onPressRight?: () => void;
+  leftTestID?: string;
+  rightTestID?: string;
 };
 
 const HeaderComp: React.FC<HeaderCompProps> = ({
@@ -19,14 +21,16 @@ const HeaderComp: React.FC<HeaderCompProps> = ({
   containerStyle,
   onPressLeft,
   onPressRight,
+  leftTestID,
+  rightTestID,
 }) => {
   return (
     <View style={[styles.header, containerStyle]}>
-      <Pressable style={styles.side} onPress={onPressLeft} disabled={!onPressLeft}>
+      <Pressable style={styles.side} onPress={onPressLeft} disabled={!onPressLeft} testID={leftTestID}>
         {leftContent}
       </Pressable>
       <RNTextComponent isSemiBold style={styles.title} textKey={titleKey} />
-      <Pressable style={[styles.side, { justifyContent: 'flex-end' }]} onPress={onPressRight} disabled={!onPressRight}>
+      <Pressable style={[styles.side, { justifyContent: 'flex-end' }]} onPress={onPressRight} disabled={!onPressRight} testID={rightTestID}>
         {rightContent}
       </Pressable>
     </View>

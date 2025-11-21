@@ -38,6 +38,7 @@ export default function HomeScreen({ navigation }: NavigationProps<Routes.HomeSc
         <RNTextComponent isSemiBold style={styles.title}>{product.title}</RNTextComponent>
         <RNTextComponent style={styles.price} textKey={STR.PRICE} values={{ price: `$${product.price.toFixed(2)}` }} />
         <Pressable
+          testID={`product_add_button_${product.id}`}
           disabled={isAdded}
           onPress={() => dispatch(addToCart(product))}
           style={[styles.button, isAdded && styles.buttonDisabled]}
