@@ -31,22 +31,29 @@ export default function CartScreen({ navigation }: NavigationProps<Routes.CartSc
           data={items}
           keyExtractor={(it) => it.id}
           ItemSeparatorComponent={() => <View style={{ height: 12 }} />}
-          renderItem={({ item }) => (
-            <View style={styles.row}>
-              <View style={{ flex: 1 }}>
-                <RNTextComponent isSemiBold style={styles.title}>{item.title}</RNTextComponent>
-                <RNTextComponent style={styles.price} textKey={STR.PRICE} values={{ price: `$${item.price.toFixed(2)}` }} />
+          renderItem={({ item, index }) => {
+            console.log('Rendering cart item:', item.id, 'at index:', index);
+            const letDeleteTestId = `cart_item_delete_${index}`;
+
+            return (
+              <View style={styles.row}>
+                <View style={{ flex: 1 }}>
+                  <RNTextComponent isSemiBold style={styles.title}>{item.title}</RNTextComponent>
+                  <RNTextComponent style={styles.price} textKey={STR.PRICE} values={{ price: `$${item.price.toFixed(2)}` }} />
+                </View>
+                <Pressable
+                  testID={`cart_item_delete_${index}`}
+                  accessibilityLabel="cart_item_delete"
+                  accessibilityRole="button"
+                  hitSlop={8}
+                  onPress={() => dispatch(removeFromCart(item.id))}
+                  style={styles.deleteBtn}
+                >
+                  <RNTextComponent style={{ fontSize: 18 }}>🗑️</RNTextComponent>
+                </Pressable>
               </View>
-              <Pressable
-                testID={`cart_item_delete_${item.id}`}
-                accessibilityLabel="cart_item_delete"
-                onPress={() => dispatch(removeFromCart(item.id))}
-                style={styles.deleteBtn}
-              >
-                <RNTextComponent style={{ fontSize: 18 }}>🗑️</RNTextComponent>
-              </Pressable>
-            </View>
-          )}
+            )
+          }}
         />
       )}
     </View>

@@ -32,11 +32,18 @@ export default function HomeScreen({ navigation }: NavigationProps<Routes.HomeSc
 
   const cartIds = useMemo(() => new Set(items.map((i: Product) => i.id)), [items]);
 
-  const renderItem = ({ item }: { item: { productId: string; instanceKey: string } }) => {
+  const renderItem = ({ item, index }: { item: { productId: string; instanceKey: string }, index: number }) => {
+    console.log('Rendering item:', item.instanceKey);
     const product = PRODUCTS.find((p) => p.id === item.productId)!;
     const isAdded = cartIds.has(product.id);
+
+    let customTestId = 'product_add_button';
+    if (index === 3) {
+      customTestId = 'product_4_add_button';
+    }
+
     return (
-      <ProductCard product={product}  isAdded={isAdded}/>
+      <ProductCard product={product} isAdded={isAdded} customTestId={customTestId} />
     );
   };
 

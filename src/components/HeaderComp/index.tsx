@@ -27,7 +27,7 @@ const HeaderComp: React.FC<HeaderCompProps> = ({
   return (
     <View style={[styles.header, containerStyle]}>
       {onPressLeft ? (
-        <Pressable style={styles.side} onPress={onPressLeft} testID={leftTestID}>
+        <Pressable style={styles.side} onPress={onPressLeft} testID={leftTestID} accessibilityLabel={leftTestID}>
           {leftContent}
         </Pressable>
       ) : (
@@ -35,7 +35,7 @@ const HeaderComp: React.FC<HeaderCompProps> = ({
       )}
       <RNTextComponent isSemiBold style={styles.title} textKey={titleKey} />
       {onPressRight ? (
-        <Pressable style={[styles.side, { justifyContent: 'flex-end' }]} onPress={onPressRight} testID={rightTestID}>
+        <Pressable style={[styles.side, { justifyContent: 'flex-end' }]} onPress={onPressRight} testID={rightTestID} accessibilityLabel={rightTestID}>
           {rightContent}
         </Pressable>
       ) : (
