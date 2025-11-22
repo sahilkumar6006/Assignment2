@@ -5,6 +5,7 @@ import { Routes } from './constants';
 import HomeScreen from '../screens/HomeScreen';
 import CartScreen from '../screens/CartScreen';
 import { IStackParamsList } from './types';
+import '../lang/i18n';
 
 const Stack = createNativeStackNavigator<IStackParamsList>();
 

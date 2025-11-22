@@ -3,7 +3,8 @@ import React from 'react';
 import {StyleSheet, Text} from 'react-native';
 import {Props} from './interface';
 import {scale, verticalScale} from 'react-native-size-matters';
-import { useT } from '../../lang/useT';
+import { useTranslation } from 'react-i18next';
+import '../../lang/i18n';
 
 const RNTextComponent: React.FC<Props> = ({
   children,
@@ -19,7 +20,7 @@ const RNTextComponent: React.FC<Props> = ({
   isDynamic,
   ...rest
 }) => {
-  const t = useT();
+  const { t } = useTranslation();
   const content = !isDynamic && textKey ? t(textKey, values) : children;
 
   return (

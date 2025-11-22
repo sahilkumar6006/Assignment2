@@ -8,6 +8,8 @@ import RNTextComponent from '../components/RNTEXTComponent';
 import HeaderComp from '../components/HeaderComp';
 import { STR } from '../constants/strings';
 import { NavigationProps, Routes } from '../routes/types';
+import ProductCard from '../components/ProductCard';
+import { changeLanguage } from '../lang/i18n';
 
 export default function HomeScreen({ navigation }: NavigationProps<Routes.HomeScreen>) {
   const dispatch = useAppDispatch();
@@ -34,24 +36,12 @@ export default function HomeScreen({ navigation }: NavigationProps<Routes.HomeSc
     const product = PRODUCTS.find((p) => p.id === item.productId)!;
     const isAdded = cartIds.has(product.id);
     return (
-      <View style={styles.card}>
-        <RNTextComponent isSemiBold style={styles.title}>{product.title}</RNTextComponent>
-        <RNTextComponent style={styles.price} textKey={STR.PRICE} values={{ price: `$${product.price.toFixed(2)}` }} />
-        <Pressable
-          testID={`product_add_button_${product.id}`}
-          accessibilityLabel="product_add_button"
-          disabled={isAdded}
-          onPress={() => dispatch(addToCart(product))}
-          style={[styles.button, isAdded && styles.buttonDisabled]}
-        >
-          <RNTextComponent style={styles.buttonText} textKey={isAdded ? STR.ADDED : STR.ADD_TO_CART} />
-        </Pressable>
-      </View>
+      <ProductCard product={product}  isAdded={isAdded}/>
     );
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <HeaderComp
         titleKey={STR.HOME}
         rightContent={
@@ -87,10 +77,10 @@ export default function HomeScreen({ navigation }: NavigationProps<Routes.HomeSc
         <View style={styles.modalBackdrop}>
           <View style={styles.modalCard}>
             <RNTextComponent isSemiBold style={styles.modalTitle} textKey="LANGUAGE" />
-            <Pressable style={styles.modalBtn} onPress={() => { dispatch(setLanguage('en')); setSettingsVisible(false); }}>
+            <Pressable style={styles.modalBtn} onPress={() => { dispatch(setLanguage('en')); changeLanguage('en'); setSettingsVisible(false); }}>
               <RNTextComponent style={styles.modalBtnText} textKey={STR.ENGLISH} />
             </Pressable>
-            <Pressable style={styles.modalBtn} onPress={() => { dispatch(setLanguage('ar')); setSettingsVisible(false); }}>
+            <Pressable style={styles.modalBtn} onPress={() => { dispatch(setLanguage('ar')); changeLanguage('ar'); setSettingsVisible(false); }}>
               <RNTextComponent style={styles.modalBtnText} textKey={STR.ARABIC} />
             </Pressable>
             <Pressable style={[styles.modalBtn, { backgroundColor: '#eee' }]} onPress={() => setSettingsVisible(false)}>
@@ -99,7 +89,7 @@ export default function HomeScreen({ navigation }: NavigationProps<Routes.HomeSc
           </View>
         </View>
       </Modal>
-    </SafeAreaView>
+    </View>
   );
 }
 
@@ -120,13 +110,6 @@ const styles = StyleSheet.create({
   icon: { fontSize: 20 },
   badge: { position: 'absolute', right: 0, top: -2, backgroundColor: '#d00', borderRadius: 8, paddingHorizontal: 4, minWidth: 16, alignItems: 'center' },
   badgeText: { color: '#fff', fontSize: 12 },
-
-  card: { flex: 1, backgroundColor: '#f9f9f9', padding: 12, borderRadius: 8, borderWidth: StyleSheet.hairlineWidth, borderColor: '#ddd' },
-  title: { fontSize: 14, fontWeight: '600', marginBottom: 8 },
-  price: { marginBottom: 8, color: '#333' },
-  button: { backgroundColor: '#111', paddingVertical: 8, borderRadius: 6, alignItems: 'center' },
-  buttonDisabled: { backgroundColor: '#888' },
-  buttonText: { color: '#fff', fontWeight: '600' },
 
   modalBackdrop: { flex: 1, backgroundColor: 'rgba(0,0,0,0.4)', alignItems: 'center', justifyContent: 'center' },
   modalCard: { width: '80%', backgroundColor: '#fff', borderRadius: 10, padding: 16 },
