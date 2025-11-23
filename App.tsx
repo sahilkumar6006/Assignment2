@@ -17,7 +17,7 @@ const LanguageInitializer = ({ children }: { children: React.ReactNode }) => {
     if (languageCode) {
       initializeLanguage(languageCode);
     }
-  }, []);
+  }, [languageCode]);
   
   return <>{children}</>;
 };

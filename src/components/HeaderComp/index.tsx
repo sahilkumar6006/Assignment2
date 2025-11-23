@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { View, StyleSheet, Pressable, ViewStyle } from 'react-native';
 import RNTextComponent from '../RNTEXTComponent';
 import { StrKey } from '../../constants/strings';
+import useIsRTL from '../../hooks/useIsRTL';
 
 export type HeaderCompProps = {
   titleKey: StrKey;
@@ -24,6 +25,29 @@ const HeaderComp: React.FC<HeaderCompProps> = ({
   leftTestID,
   rightTestID,
 }) => {
+  const isRTL = useIsRTL();
+  
+  const styles = useMemo(() => StyleSheet.create({
+    header: {
+      height: 56,
+      flexDirection: isRTL ? 'row-reverse' : 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      paddingHorizontal: 12,
+      borderBottomWidth: StyleSheet.hairlineWidth,
+      borderBottomColor: '#ddd',
+    },
+    side: { 
+      minWidth: 40, 
+      flexDirection: 'row', 
+      alignItems: 'center' 
+    },
+    title: { 
+      fontSize: 18,
+      textAlign: isRTL ? 'right' : 'left',
+    },
+  }), [isRTL]);
+
   return (
     <View style={[styles.header, containerStyle]}>
       {onPressLeft ? (
@@ -44,19 +68,5 @@ const HeaderComp: React.FC<HeaderCompProps> = ({
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  header: {
-    height: 56,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 12,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: '#ddd',
-  },
-  side: { minWidth: 40, flexDirection: 'row', alignItems: 'center' },
-  title: { fontSize: 18 },
-});
 
 export default HeaderComp;

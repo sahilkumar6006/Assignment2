@@ -40,12 +40,11 @@ export const initializeLanguage = (languageCode: 'en' | 'ar' = 'en') => {
     i18next.changeLanguage(languageCode);
   }
   
+  // Allow RTL support for text direction
+  // Layout RTL is handled manually through useIsRTL hook and RTL-aware styles
   const isRTL = ['ar', 'ur'].includes(languageCode);
-  const currentRTL = I18nManager.isRTL;
-  
-  if (isRTL !== currentRTL) {
-    I18nManager.forceRTL(isRTL);
-  }
+  I18nManager.allowRTL(true);
+  I18nManager.swapLeftAndRightInRTL(true);
 };
 
 
@@ -54,12 +53,11 @@ export const changeLanguage = async (lngOrName: string) => {
     const lng = getLanguageCode(lngOrName) as 'en' | 'ar';
     await i18next.changeLanguage(lng);
     
-    const isRTL = ['ar', 'ur'].includes(lng);
-    const currentRTL = I18nManager.isRTL;
-    
-    if (isRTL !== currentRTL) {
-      I18nManager.forceRTL(isRTL);
-    }
+    // Allow RTL support for text direction
+    // Layout RTL is handled manually through useIsRTL hook and RTL-aware styles
+    // This allows immediate layout changes without app restart
+    I18nManager.allowRTL(true);
+    I18nManager.swapLeftAndRightInRTL(true);
     
     return true;
   } catch (error) {
