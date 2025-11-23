@@ -39,9 +39,6 @@ export const initializeLanguage = (languageCode: 'en' | 'ar' = 'en') => {
   } else {
     i18next.changeLanguage(languageCode);
   }
-  
-  // Allow RTL support for text direction
-  // Layout RTL is handled manually through useIsRTL hook and RTL-aware styles
   const isRTL = ['ar', 'ur'].includes(languageCode);
   I18nManager.allowRTL(true);
   I18nManager.swapLeftAndRightInRTL(true);
@@ -52,13 +49,9 @@ export const changeLanguage = async (lngOrName: string) => {
   try {
     const lng = getLanguageCode(lngOrName) as 'en' | 'ar';
     await i18next.changeLanguage(lng);
-    
-    // Allow RTL support for text direction
-    // Layout RTL is handled manually through useIsRTL hook and RTL-aware styles
-    // This allows immediate layout changes without app restart
     I18nManager.allowRTL(true);
     I18nManager.swapLeftAndRightInRTL(true);
-    
+
     return true;
   } catch (error) {
     console.error('Error changing language:', error);
