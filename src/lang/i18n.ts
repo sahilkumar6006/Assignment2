@@ -3,7 +3,6 @@ import { initReactI18next } from 'react-i18next';
 import { I18nManager } from 'react-native';
 import en from './en.json';
 import ar from './ar.json';
-import { store } from '../store';
 
 export const languageNameToCode: Record<string, string> = {
   English: 'en',
@@ -19,22 +18,49 @@ export const languageResources = {
   ar: { translation: ar },
 };
 
+
 if (!i18next.isInitialized) {
   i18next.use(initReactI18next).init({
-    compatibilityJSON: 'v3',
-    lng: (store.getState().language?.code as 'en' | 'ar') ?? 'en',
+    lng: 'en',
     fallbackLng: 'en',
     resources: languageResources,
     interpolation: { escapeValue: false },
   });
 }
 
+export const initializeLanguage = (languageCode: 'en' | 'ar' = 'en') => {
+  if (!i18next.isInitialized) {
+    i18next.use(initReactI18next).init({
+      lng: languageCode,
+      fallbackLng: 'en',
+      resources: languageResources,
+      interpolation: { escapeValue: false },
+    });
+  } else {
+    i18next.changeLanguage(languageCode);
+  }
+  
+  const isRTL = ['ar', 'ur'].includes(languageCode);
+  const currentRTL = I18nManager.isRTL;
+  
+  if (isRTL !== currentRTL) {
+    I18nManager.forceRTL(isRTL);
+  }
+};
+
+
 export const changeLanguage = async (lngOrName: string) => {
   try {
-    const lng = getLanguageCode(lngOrName);
+    const lng = getLanguageCode(lngOrName) as 'en' | 'ar';
     await i18next.changeLanguage(lng);
+    
     const isRTL = ['ar', 'ur'].includes(lng);
-    I18nManager.forceRTL(isRTL);
+    const currentRTL = I18nManager.isRTL;
+    
+    if (isRTL !== currentRTL) {
+      I18nManager.forceRTL(isRTL);
+    }
+    
     return true;
   } catch (error) {
     console.error('Error changing language:', error);

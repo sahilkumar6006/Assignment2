@@ -9,10 +9,9 @@ appId: host.exp.Exponent
 - tapOn:
     id: "cart_icon"
 
-
 - tapOn:
     id: "cart_item_delete_0"
 
 - pressKey: "BACK"
 - assertVisible:
-    text: "Home"
+    text: "Home" 

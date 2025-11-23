@@ -84,11 +84,49 @@ export default function HomeScreen({ navigation }: NavigationProps<Routes.HomeSc
         <View style={styles.modalBackdrop}>
           <View style={styles.modalCard}>
             <RNTextComponent isSemiBold style={styles.modalTitle} textKey="LANGUAGE" />
-            <Pressable style={styles.modalBtn} onPress={() => { dispatch(setLanguage('en')); changeLanguage('en'); setSettingsVisible(false); }}>
-              <RNTextComponent style={styles.modalBtnText} textKey={STR.ENGLISH} />
+            <Pressable 
+              style={[
+                styles.modalBtn, 
+                lang === 'en' && styles.modalBtnSelected
+              ]} 
+              onPress={() => { 
+                dispatch(setLanguage('en')); 
+                changeLanguage('en'); 
+                setSettingsVisible(false); 
+              }}
+            >
+              <RNTextComponent 
+                style={[
+                  styles.modalBtnText,
+                  lang === 'en' && styles.modalBtnTextSelected
+                ]} 
+                textKey={STR.ENGLISH} 
+              />
+              {lang === 'en' && (
+                <RNTextComponent style={styles.checkmark}>✓</RNTextComponent>
+              )}
             </Pressable>
-            <Pressable style={styles.modalBtn} onPress={() => { dispatch(setLanguage('ar')); changeLanguage('ar'); setSettingsVisible(false); }}>
-              <RNTextComponent style={styles.modalBtnText} textKey={STR.ARABIC} />
+            <Pressable 
+              style={[
+                styles.modalBtn, 
+                lang === 'ar' && styles.modalBtnSelected
+              ]} 
+              onPress={() => { 
+                dispatch(setLanguage('ar')); 
+                changeLanguage('ar'); 
+                setSettingsVisible(false); 
+              }}
+            >
+              <RNTextComponent 
+                style={[
+                  styles.modalBtnText,
+                  lang === 'ar' && styles.modalBtnTextSelected
+                ]} 
+                textKey={STR.ARABIC} 
+              />
+              {lang === 'ar' && (
+                <RNTextComponent style={styles.checkmark}>✓</RNTextComponent>
+              )}
             </Pressable>
             <Pressable style={[styles.modalBtn, { backgroundColor: '#eee' }]} onPress={() => setSettingsVisible(false)}>
               <RNTextComponent style={[styles.modalBtnText, { color: '#333' }]} textKey={STR.CLOSE} />
@@ -121,6 +159,24 @@ const styles = StyleSheet.create({
   modalBackdrop: { flex: 1, backgroundColor: 'rgba(0,0,0,0.4)', alignItems: 'center', justifyContent: 'center' },
   modalCard: { width: '80%', backgroundColor: '#fff', borderRadius: 10, padding: 16 },
   modalTitle: { fontSize: 16, fontWeight: '700', marginBottom: 12 },
-  modalBtn: { backgroundColor: '#111', padding: 10, borderRadius: 6, marginVertical: 6 },
-  modalBtnText: { color: '#fff', textAlign: 'center', fontWeight: '600' },
+  modalBtn: { 
+    backgroundColor: '#111', 
+    padding: 10, 
+    borderRadius: 6, 
+    marginVertical: 6,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  modalBtnSelected: {
+    backgroundColor: '#007AFF',
+  },
+  modalBtnText: { color: '#fff', textAlign: 'center', fontWeight: '600', flex: 1 },
+  modalBtnTextSelected: { color: '#fff' },
+  checkmark: { 
+    color: '#fff', 
+    fontSize: 16, 
+    fontWeight: 'bold',
+    marginLeft: 8,
+  },
 });
